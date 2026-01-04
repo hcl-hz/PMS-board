@@ -1,0 +1,270 @@
+.write {
+  display: grid;
+  gap: 14px;
+}
+
+.write__header {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 12px;
+}
+
+.write__title {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.write__desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.write-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  padding: 16px;
+}
+
+.write-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.write-field {
+  display: grid;
+  gap: 8px;
+}
+
+.write-inline {
+  align-items: center;
+}
+
+.write-label {
+  font-size: 13px;
+  font-weight: 800;
+  color: #374151;
+}
+
+.write-input,
+.write-select,
+.write-textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fff;
+  color: var(--color-text);
+  -webkit-text-fill-color: var(--color-text);
+}
+
+.write-input,
+.write-select {
+  height: 42px;
+  padding: 0 12px;
+  line-height: 42px;
+}
+
+.write-textarea {
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.write-input::placeholder,
+.write-textarea::placeholder {
+  color: var(--color-muted);
+}
+
+.file-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.file-picker__input {
+  display: none;
+}
+
+.file-picker__text {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+/* 업로더(드래그&드롭) */
+.uploader {
+  display: grid;
+  gap: 10px;
+}
+
+.uploader__input {
+  display: none;
+}
+
+.uploader__drop {
+  border: 1px dashed rgba(17, 24, 39, 0.25);
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+}
+
+.uploader__drop.is-dragging {
+  border-color: rgba(37, 99, 235, 0.6);
+  background: #eff6ff;
+}
+
+.uploader__title {
+  font-weight: 900;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.uploader__desc {
+  font-size: 13px;
+  color: #374151;
+}
+
+.uploader__btn {
+  border: 0;
+  background: transparent;
+  color: var(--color-primary);
+  font-weight: 900;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.uploader__help {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.uploader__remove {
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.uploader__remove:hover {
+  background: #f3f4f6;
+}
+
+.write-input:focus,
+.write-select:focus,
+.write-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.write-check {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+  color: #374151;
+}
+
+.write-muted {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.write-error {
+  font-size: 12px;
+  color: var(--color-danger);
+}
+
+.write-guide {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: #f9fafb;
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.write-guide__title {
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.write-guide__desc {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.write-guide__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.write-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.write-tag {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  background: #fff;
+}
+
+.write-filelist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.write-fileitem {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 12px;
+}
+
+.write-fileitem__name {
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 520px;
+}
+
+.write-fileitem__meta {
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.write-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+}
+
+
