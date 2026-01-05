@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { useBoardStore } from '@/store/boardStore';
@@ -20,7 +20,6 @@ const GUIDE_TEMPLATE = `1) 발생일시: \n2) 발생페이지: \n3) 증상: \n4)
 export default function BoardWritePage() {
   const router = useRouter();
   const { currentUser, addBoard } = useBoardStore();
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [title, setTitle] = useState('');
   const [contentHtml, setContentHtml] = useState('');

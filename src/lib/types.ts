@@ -36,7 +36,7 @@ export interface Tag {
 export interface BoardStatus {
   id: string;
   name: string;
-  code: 'received' | 'confirmed' | 'in_progress' | 'completed' | 'hold' | 'cancelled';
+  code: 'received' | 'confirmed' | 'in_progress' | 'completed' | 'hold' | 'cancelled' | 'notice';
   color: string;
   label: string;
 }

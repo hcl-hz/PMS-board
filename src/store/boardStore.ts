@@ -3,13 +3,8 @@ import { devtools, persist } from 'zustand/middleware';
 import { Attachment, Board, BoardFilter, Tag, User } from '@/lib/types';
 import {
   mockBoards,
-  mockUsers,
   mockStatuses,
-  mockTags,
-  getUserById,
-  getUserAccessibleBoards,
-  getBoardsByStatus,
-  getBoardsByProject
+  mockTags
 } from '@/lib/mockData';
 
 interface BoardState {
@@ -70,7 +65,7 @@ export const useBoardStore = create<BoardState>()(
               boards: mockBoards,
               loading: false
             });
-          } catch (error) {
+          } catch {
             set({
               error: '게시글을 불러오는데 실패했습니다.',
               loading: false
@@ -388,15 +383,6 @@ export const useBoardStore = create<BoardState>()(
     }
   )
 );
-
-function escapeHtml(input: string) {
-  return input
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
 
 function safeFilenameForStore(name: string) {
   return name.replace(/[^\w.\-()가-힣]+/g, '_');

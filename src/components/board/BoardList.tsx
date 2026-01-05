@@ -5,7 +5,7 @@ import { BoardItem } from './BoardItem';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { Board, BoardFilter } from '@/lib/types';
+import { Board } from '@/lib/types';
 import { mockStatuses, mockProjects } from '@/lib/mockData';
 
 interface BoardListProps {
@@ -27,27 +27,33 @@ export const BoardList: React.FC<BoardListProps> = ({ onBoardClick }) => {
     getFilteredBoards
   } = useBoardStore();
 
-  const [filteredBoards, setFilteredBoards] = useState<Board[]>([]);
+  const filteredBoards = React.useMemo(() => {
+    return getFilteredBoards();
+  }, [boards, filter, searchQuery, getFilteredBoards]);
+
   const [visibleCount, setVisibleCount] = useState<number>(PAGE_SIZE);
   const [isAutoLoading, setIsAutoLoading] = useState<boolean>(false);
   const [sentinelEl, setSentinelEl] = useState<HTMLDivElement | null>(null);
 
-  const sortedProjects = [...mockProjects].sort((a, b) => {
-    const ak = isKoreanFirst(a.name);
-    const bk = isKoreanFirst(b.name);
-    if (ak !== bk) return ak ? -1 : 1; // 한글 먼저
-    return a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' });
-  });
+  // 필터나 검색어가 변경되면 visibleCount 초기화 (렌더링 중 상태 조정)
+  const [prevFilter, setPrevFilter] = useState({ filter, searchQuery });
+  if (prevFilter.filter !== filter || prevFilter.searchQuery !== searchQuery) {
+    setPrevFilter({ filter, searchQuery });
+    setVisibleCount(PAGE_SIZE);
+  }
+
+  const sortedProjects = React.useMemo(() => {
+    return [...mockProjects].sort((a, b) => {
+      const ak = isKoreanFirst(a.name);
+      const bk = isKoreanFirst(b.name);
+      if (ak !== bk) return ak ? -1 : 1; // 한글 먼저
+      return a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' });
+    });
+  }, []);
 
   useEffect(() => {
     loadBoards();
   }, [loadBoards]);
-
-  useEffect(() => {
-    const filtered = getFilteredBoards();
-    setFilteredBoards(filtered);
-    setVisibleCount(PAGE_SIZE);
-  }, [boards, filter, searchQuery, getFilteredBoards]);
 
   useEffect(() => {
     if (!sentinelEl) return;
@@ -60,6 +66,10 @@ export const BoardList: React.FC<BoardListProps> = ({ onBoardClick }) => {
         if (!first?.isIntersecting) return;
         setIsAutoLoading(true);
         setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, filteredBoards.length));
+        // 데이터가 동기적으로 로드되므로 즉시 해제 가능하지만, 
+        // 사용자에게 '불러오는 중...' 힌트를 아주 짧게라도 보여주려면 setTimeout 등을 고려할 수 있음.
+        // 여기서는 에러 수정을 위해 즉시 해제하거나 비동기로 처리.
+        setTimeout(() => setIsAutoLoading(false), 100);
       },
       { root: null, rootMargin: '200px 0px', threshold: 0 }
     );
@@ -67,11 +77,6 @@ export const BoardList: React.FC<BoardListProps> = ({ onBoardClick }) => {
     obs.observe(sentinelEl);
     return () => obs.disconnect();
   }, [sentinelEl, visibleCount, filteredBoards.length]);
-
-  useEffect(() => {
-    // visibleCount가 변해 더 로드됐으면 로딩 상태를 해제
-    setIsAutoLoading(false);
-  }, [visibleCount]);
 
   const handleStatusFilter = (statusCode: string | null) => {
     setFilter({
@@ -231,7 +236,7 @@ export const BoardList: React.FC<BoardListProps> = ({ onBoardClick }) => {
             )}
             {searchQuery && (
               <Badge variant="info" size="sm">
-                검색: "{searchQuery}"
+                검색: &quot;{searchQuery}&quot;
               </Badge>
             )}
           </div>

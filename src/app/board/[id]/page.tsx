@@ -18,7 +18,6 @@ export default function BoardDetailPage() {
     currentUser,
     boards,
     loadBoards,
-    getBoardById,
     addComment,
     updateComment,
     deleteComment,
@@ -51,10 +50,9 @@ export default function BoardDetailPage() {
     }
   }, [boards.length, loadBoards]);
 
-  const board = useMemo(() => {
-    if (!boardId) return undefined;
-    return getBoardById(boardId);
-  }, [boardId, getBoardById, boards]); // boards.length 대신 boards 전체를 감시
+  const board = useBoardStore((state) => 
+    boardId ? state.boards.find(b => b.id === boardId) : undefined
+  );
 
   const canAccess = useMemo(() => {
     if (!board) return false;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { BoardList } from '@/components/board/BoardList';
 import { useBoardStore } from '@/store/boardStore';
@@ -11,14 +11,12 @@ import { Button } from '@/components/ui/Button';
 export default function Home() {
   const router = useRouter();
   const { currentUser, setCurrentUser } = useBoardStore();
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   useEffect(() => {
     // 자동 로그인 로직 제거 (Persist 미들웨어가 currentUser를 관리함)
   }, []);
 
   const handleUserChange = (user: User) => {
-    setSelectedUser(user);
     setCurrentUser(user);
   };
 
@@ -123,7 +121,6 @@ export default function Home() {
                 size="sm"
                 onClick={() => {
                   setCurrentUser(null);
-                  setSelectedUser(null);
                 }}
               >
                 로그아웃
